@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ShoppingCartModels.EntityModels.Product>
+
+@{
+    ViewBag.Title = "Product";
+}
+<div class="d-flex justify-content-between">
+    @*<h2>Hi, @Session["userName"]</h2>*@
+    @Html.ActionLink("Logout", "Logout", "Authentication", "", new { @class = "btn btn btn-outline-danger" })
+</div>
+<h2>All Products</h2>
+<div class="row d-flex flex-wrap gap-4">
+    @foreach (var item in Model)
+    {
+        <div class="card w-25 m-4">
+
+            <ul style="list-style:none">
+                <li>
+                    @Html.DisplayNameFor(model => model.ProductName) :
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </li>
+                <li>
+                    @Html.DisplayNameFor(model => model.ProductPrice) :
+                    @Html.DisplayFor(modelItem => item.ProductPrice)
+                </li>
+                <li>
+                    @Html.DisplayNameFor(model => model.ProductDescription) :
+                    @Html.DisplayFor(modelItem => item.ProductDescription)
+                </li>
+
+            </ul>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-success">asdfa</button>
+                        @*<input type="submit" value="Add To Cart " class="btn btn-outline-success" onclick="addToCart('@ViewBag.userId', '@item.ProductId', '@item.ProductName', '@item.ProductDescription', @item.ProductQuantity, @item.ProductPrice, '@item.ProductImage')" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    function addToCart(userId, productId, productName, productDescription, productQuantity, productPrice, productImage) {
+        // Check if cart exists in local storage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Find index of the product in the cart
+        const productIndex = cart.findIndex(item => item.userId === userId && item.productId === productId);
+
+        if (productIndex !== -1) {
+            // Product already exists in the cart, increase quantity
+            cart[productIndex].productQuantity += 1;
+        } else {
+            // Product doesn't exist in the cart, add it as a new object
+            cart.push({
+                userId,
+                productId,
+                productName,
+                productDescription,
+                productQuantity,
+                productPrice,
+                productImage
+            });
+        }
+
+        // Update local storage
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Optional: Provide feedback to the user
+        alert('Item added to local storage!!');
+    }
+</script>
+
+
