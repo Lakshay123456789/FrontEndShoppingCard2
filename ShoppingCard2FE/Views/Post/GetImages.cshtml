@@ -1,0 +1,30 @@
+﻿@model List<ShoppingCard2FE.Models.ModelDto.PostDto>
+
+
+<div class="container">
+    <table class="table table-bordered table-hover">
+        <thead>
+
+            <tr>
+                <th> Post Title </th>
+                <th> Image </th>
+                <th> Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                @foreach (var post in @Model)
+                {
+                    <tr>
+                        <td>@post.PostTitle</td>
+                        <td>  <img decoding="async" src="~/images/@post.PostImage" width="90px" height="90px" /></td>
+                        <td><button class="btn btn-danger">Edit</button> | <button class="btn btn-warning">Delete</button></td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+</div>
